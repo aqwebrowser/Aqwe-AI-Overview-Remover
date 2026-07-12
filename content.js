@@ -1,42 +1,54 @@
-function removeAIOverview() {
-    const selectors = [
-        // Google AI Overview containers
-        '[data-async-context*="ai_overview"]',
-        '[data-attrid*="AI"]',
-        '[jsname="N760b"]',
-        '.GcKpu',
-        '.A6K0A',
-        '.E2ShMd'
-    ];
+// AI Overview Remover for AqweBrowser
+// Safer detector version
 
-    selectors.forEach(selector => {
-        document.querySelectorAll(selector).forEach(element => {
-            element.remove();
-        });
-    });
+(function () {
+    "use strict";
 
-    // Backup: remove sections containing "AI Overview" text
-    document.querySelectorAll("div").forEach(div => {
-        const text = div.innerText?.trim();
+    function removeAIOverview() {
 
-        if (text === "AI Overview" || text?.startsWith("AI Overview")) {
-            const parent = div.closest("div");
-            if (parent) {
-                parent.remove();
+        const headings = document.querySelectorAll("h1, h2, h3, div[role='heading']");
+
+        headings.forEach(heading => {
+
+            const text = heading.innerText?.trim().toLowerCase();
+
+            if (text === "ai overview") {
+
+                let card = heading;
+
+                // Go upward until we find a reasonable Google result card
+                for (let i = 0; i < 5; i++) {
+                    if (card.parentElement) {
+                        card = card.parentElement;
+                    }
+                }
+
+                // Only hide if it is actually an AI Overview block
+                if (
+                    card.innerText &&
+                    card.innerText.toLowerCase().includes("ai overview")
+                ) {
+                    card.style.display = "none";
+                }
             }
-        }
+        });
+    }
+
+
+    // Run multiple times because Google loads AI Overview later
+    setTimeout(removeAIOverview, 1000);
+    setTimeout(removeAIOverview, 3000);
+    setTimeout(removeAIOverview, 5000);
+
+
+    // Watch dynamic changes
+    const observer = new MutationObserver(() => {
+        removeAIOverview();
     });
-}
 
-// Run when page loads
-removeAIOverview();
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 
-// Keep watching for Google loading AI Overview dynamically
-const observer = new MutationObserver(() => {
-    removeAIOverview();
-});
-
-observer.observe(document.body, {
-    childList: true,
-    subtree: true
-});
+})();

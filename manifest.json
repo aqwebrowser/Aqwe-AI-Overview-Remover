@@ -1,28 +1,23 @@
 {
   "manifest_version": 3,
   "name": "AI Overview Remover",
-  "version": "1.0",
-  "description": "Removes AI Overviews from Google Search.",
-
+  "version": "1.0.0",
+  "description": "Removes Google AI Overview from search results.",
   "icons": {
     "128": "Logo.jpg"
   },
-
   "content_scripts": [
     {
       "matches": [
-        "https://www.google.com/*",
-        "https://www.google.co.uk/*",
-        "https://www.google.ca/*",
-        "https://www.google.com.au/*",
-        "https://www.google.de/*",
-        "https://www.google.fr/*",
-        "https://www.google.co.jp/*"
+        "https://www.google.com/*"
+      ],
+      "css": [
+        "hide.css"
       ],
       "js": [
         "content.js"
       ],
-      "run_at": "document_idle"
+      "run_at": "document_start"
     }
   ]
 }

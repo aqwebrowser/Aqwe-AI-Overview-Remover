@@ -1,0 +1,12 @@
+/* Google AI Overview remover */
+
+div:has(h2):has(span) {
+    /* intentionally empty - placeholder */
+}
+
+/* Hide common AI Overview containers */
+div[data-attrid*="ai"],
+div[data-async-context*="ai_overview"],
+div[jsname="N760b"] {
+    display: none !important;
+}
