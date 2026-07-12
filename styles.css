@@ -1,0 +1,4 @@
+/* Hide common AI containers if found */
+[data-attrid="AI_OVERVIEW"] {
+    display: none !important;
+}

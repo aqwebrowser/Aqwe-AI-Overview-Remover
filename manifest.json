@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Hide Google AI",
+  "version": "1.0",
+  "description": "Removes Google AI Overview from search results.",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/search*",
+        "https://www.google.*/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
